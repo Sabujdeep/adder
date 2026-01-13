@@ -141,18 +141,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             margin: 0;
-            padding: 20px;
+            /* padding: 20px; */
             min-height: 100vh;
         }
 
         .navbar {
+            margin-top:20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: rgba(255, 255, 255, 0.95);
             padding: 16px 30px;
             color: #1f2937;
-            border-radius: 12px;
+            /* border-radius: 12px; */
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
             margin-bottom: 30px;
             backdrop-filter: blur(10px);
@@ -396,7 +397,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .add-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            /* background: linear-gradient(135deg, #667eea, #764ba2); */
             color: #fff;
             padding: 10px 14px;
             display: inline-flex;
@@ -483,7 +484,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <h2><?php echo ucfirst($action); ?> Student</h2>
 
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" id='studentForm' onsubmit="return validateForm()">
 
             <!-- STUDENT INFORMATION SECTION -->
             <div class="form-section">
@@ -510,14 +511,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" name="email"
-                               value="<?= htmlspecialchars($studentData['email'] ?? '') ?>">
+                            <input type="email" name="email" id="email" oninput="validateEmail()"
+                                value="<?= htmlspecialchars($studentData['email'] ?? '') ?>">
+                            <span class="error-message" id="emailError"></span>
                     </div>
 
                     <div class="form-group">
-                        <label>Phone</label>
-                        <input type="text" name="phone"
-                               value="<?= htmlspecialchars($studentData['phone'] ?? '') ?>">
+                         <label>Phone (10 digits)</label>
+                            <input type="text" name="phone" id="phone" maxlength="10" oninput="validatePhone()"
+                                value="<?= htmlspecialchars($studentData['phone'] ?? '') ?>">
+                            <span class="error-message" id="phoneError"></span>
                     </div>
 
                     <div class="form-group">
@@ -529,9 +532,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-grid">
                     <div class="form-group">
-                        <label>Aadhaar Number</label>
-                        <input type="text" name="adhaar_number"
-                               value="<?= htmlspecialchars($studentData['adhaar_number'] ?? '') ?>">
+                       <label>Aadhaar Number (12 digits)</label>
+                            <input type="text" name="adhaar_number" id="adhaar_number" maxlength="12" oninput="validateAadhaar()"
+                                value="<?= htmlspecialchars($studentData['adhaar_number'] ?? '') ?>">
+                            <span class="error-message" id="aadhaarError"></span>
                     </div>
 
                     <div class="form-group">
@@ -650,9 +654,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                             <input type="hidden" name="old_qualification_file[]" value="">
 
-                            <div class="q-actions">
+                            <div class="form-group">
+                                <label>Actions</label>
+                                <div class="q-actions">
                                 <button type="button" class="add-btn" onclick="addRow()">➕</button>
                                 <button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>
+                            </div>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -663,7 +670,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </form>
     </div>
-
+    <script src="validation.js"></script>
+<!-- script for adding new now -->
 <script>
 let qualificationCount = document.querySelectorAll('.qualification-row').length;
 

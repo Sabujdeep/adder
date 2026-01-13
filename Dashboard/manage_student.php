@@ -38,18 +38,19 @@ $student_count = $result->num_rows;
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             margin: 0;
-            padding: 20px;
+            /* padding: 20px; */
             min-height: 100vh;
         }
 
         .navbar {
             display: flex;
+            margin-top: 20px;
             justify-content: space-between;
             align-items: center;
             background: rgba(255, 255, 255, 0.95);
             padding: 16px 30px;
             color: #1f2937;
-            border-radius: 12px;
+            /* border-radius: 12px; */
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
             margin-bottom: 30px;
             backdrop-filter: blur(10px);
@@ -135,8 +136,8 @@ $student_count = $result->num_rows;
 
         .add-btn {
             text-decoration: none;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: #fff;
+            /* background: linear-gradient(135deg, #667eea, #764ba2); */
+            color: 'black';
             padding: 12px 24px;
             border-radius: 10px;
             font-size: 14px;

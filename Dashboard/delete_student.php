@@ -54,7 +54,7 @@ try {
 
     $conn->commit();
 
-    $_SESSION['student_msg'] = '<div class="alert">Student deleted successfully.</div>';
+    $_SESSION['student_msg'] = 'Student deleted successfully';
 
 } catch (Exception $e) {
     $conn->rollback();
