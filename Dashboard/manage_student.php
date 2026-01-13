@@ -2,6 +2,20 @@
 session_start();
 include "../db_conn.php";  // your database connection
 
+// Check if user is logged in
+if (!isset($_SESSION['admin_id']) || !isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    $_SESSION['alert'] = [
+        'type' => 'error',
+        'title' => 'Access Denied',
+        'message' => 'Please login to access this page.'
+    ];
+    header("Location: ../login.php");
+    exit();
+}
+
+// Get admin name for display
+$admin_name = $_SESSION['admin_name'] ?? 'Admin';
+
 // Fetch all students
 $sql = "SELECT * FROM student ORDER BY student_id DESC";
 $result = $conn->query($sql);

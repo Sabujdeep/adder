@@ -1,7 +1,20 @@
-<!-- <?php
-include "../db_conn.php";  // Connecting to the database
+<?php
 session_start();
-?> -->
+
+// Check if user is logged in
+if (!isset($_SESSION['admin_id']) || !isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    $_SESSION['alert'] = [
+        'type' => 'error',
+        'title' => 'Access Denied',
+        'message' => 'Please login to access this page.'
+    ];
+    header("Location: ../login.php");
+    exit();
+}
+
+// Get admin name for display
+$admin_name = $_SESSION['admin_name'] ?? 'Admin';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,6 +106,26 @@ session_start();
             font-weight: 500;
         }
 
+        .user-greeting {
+            background: linear-gradient(135deg, #f0f4ff, #e0e7ff);
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #c7d2fe;
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4338ca;
+            margin-bottom: 4px;
+        }
+
+        .user-role {
+            font-size: 13px;
+            color: #6366f1;
+        }
+
         h1 {
             font-size: 32px;
             color: #111827;
@@ -165,18 +198,6 @@ session_start();
             background: linear-gradient(135deg, #764ba2, #667eea);
         }
 
-        .btn-secondary-action {
-            background: #f3f4f6;
-            color: #374151;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .btn-secondary-action:hover {
-            background: #e5e7eb;
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-        }
-
         .btn-logout {
             background: #fee2e2;
             color: #991b1b;
@@ -201,45 +222,6 @@ session_start();
             border-top: 1px solid #e5e7eb;
         }
 
-        .feature-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .feature-item {
-            padding: 16px;
-            background: #f9fafb;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            background: #f0f4ff;
-            border-color: #667eea;
-        }
-
-        .feature-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .feature-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 4px;
-        }
-
-        .feature-desc {
-            font-size: 12px;
-            color: #9ca3af;
-        }
-
         @media (max-width: 600px) {
             .dashboard-card {
                 padding: 40px 24px;
@@ -255,10 +237,6 @@ session_start();
 
             .welcome-text {
                 font-size: 14px;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
             }
 
             .actions-section {
@@ -282,13 +260,18 @@ session_start();
                 <div class="logo-subtitle">Management System</div>
             </div>
 
+            <!-- User Greeting -->
+            <div class="user-greeting">
+                <div class="user-name">👋 Hello, <?php echo htmlspecialchars($admin_name); ?>!</div>
+                <div class="user-role">Logged in as Administrator</div>
+            </div>
+
             <!-- Welcome Section -->
-            <h1>Welcome Back! 👋</h1>
+            <h1>Welcome Back!</h1>
             <p class="welcome-text">
                 Manage your student database with ease. Access all the student and their documents from here.
             </p>
 
-          
             <!-- Divider -->
             <div class="divider"></div>
 
@@ -297,14 +280,19 @@ session_start();
                 <a href="manage_student.php" class="btn-link btn-primary-action">
                     <span>📋 Manage Students</span>
                 </a>
-                <a href="logout.php" class="btn-link btn-logout">
-                    <span>🚪 Logout</span>
-                </a>
+                
+                <!-- Logout Form -->
+                <form action="../adminhandler.php" method="POST" style="width: 100%;">
+                    <input type="hidden" name="action" value="logout">
+                    <button type="submit" class="btn-link btn-logout" style="width: 100%;">
+                        <span>🚪 Logout</span>
+                    </button>
+                </form>
             </div>
 
             <!-- Footer -->
             <div class="footer-text">
-                
+                Secure session active
             </div>
         </div>
     </div>

@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,7 +92,7 @@
 <div class="login-card">
   <h2>Welcome Back</h2>
 
-  <form id="loginForm" action="Dashboard/index.php" method="POST" autocomplete="off">
+  <form id="loginForm" action="adminhandler.php" method="POST" autocomplete="off">
     <input type="hidden" name="action" value="login">
 
     <div class="mb-3 text-start">

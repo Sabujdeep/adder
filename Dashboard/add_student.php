@@ -1,5 +1,20 @@
 <?php
 session_start();
+// Check if user is logged in
+if (!isset($_SESSION['admin_id']) || !isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    $_SESSION['alert'] = [
+        'type' => 'error',
+        'title' => 'Access Denied',
+        'message' => 'Please login to access this page.'
+    ];
+    header("Location: ../login.php");
+    exit();
+}
+
+// Get admin name for display
+$admin_name = $_SESSION['admin_name'] ?? 'Admin';
+
+
 include "../db_conn.php";  // Database connection
 
 $student_id = isset($_GET['student_id']) ? (int)$_GET['student_id'] : 0;
@@ -23,7 +38,26 @@ if ($action === 'edit' && $student_id > 0) {
     $stmt->execute();
     $qualificationData = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
+    $studentFileName = $_POST['old_student_file'] ?? '';
 
+            if (isset($_FILES['student_file']) && $_FILES['student_file']['error'] === 0) {
+
+                $uploadDir = "../uploads/students/";
+
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+
+                $ext = pathinfo($_FILES['student_file']['name'], PATHINFO_EXTENSION);
+                $studentFileName = time() . "_student." . $ext;
+
+                move_uploaded_file(
+                    $_FILES['student_file']['tmp_name'],
+                    $uploadDir . $studentFileName
+                );
+            }
+
+    
 // ---------- FORM SUBMIT ----------
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -38,7 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'joining_year'  => $_POST['joining_year'] ?? '',
         'father_name'   => $_POST['father_name'] ?? '',
         'adhaar_number' => $_POST['adhaar_number'] ?? '',
-        'file_upload'   => $_FILES['student_file']['name'] ?? ''
+        'file_upload'   => $studentFileName,
+
     ];
 
     // Add or Update student
