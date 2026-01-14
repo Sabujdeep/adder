@@ -148,3 +148,46 @@ class Student
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 }
+
+
+<!-- ------------------------------------------------------------------------------------- -->
+
+
+2️⃣ Use the class in your existing page
+
+At the top of your add_student file (after DB connection):
+
+require_once "../classes/Student.php";
+
+$studentObj = new Student($conn);
+
+
+
+
+3️⃣ Replace your POST logic with THIS
+
+✅ This is the only logic you need now
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $student_id = $studentObj->saveStudent(
+        $_POST,
+        $_FILES,
+        $action,
+        $student_id
+    );
+
+    $_SESSION['student_msg'] = "Student and qualifications saved successfully!";
+    header("Location: manage_student.php");
+    exit;
+}
+
+
+4️⃣ Replace edit-mode fetch logic
+
+Instead of raw SQL:
+
+if ($action === 'edit' && $student_id > 0) {
+    $studentData = $studentObj->getStudent($student_id);
+    $qualificationData = $studentObj->getQualifications($student_id);
+}

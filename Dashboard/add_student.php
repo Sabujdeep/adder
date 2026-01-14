@@ -192,7 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .container {
             max-width: 1100px;
-            margin: 0 auto;
+            margin: 30px auto 0;
         }
 
         h2 {
@@ -349,7 +349,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         /* QUALIFICATION ROWS */
         .qualification-row {
             display: grid;
-            grid-template-columns: auto 1fr 1fr 1fr 100px 100px 160px auto;
+            grid-template-columns: auto 1fr 1fr 1fr 100px 100px 90px;
             gap: 12px;
             background: #f9fafb;
             border: 1.5px solid #e5e7eb;
@@ -446,6 +446,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             color: #9ca3af;
             padding: 30px;
             font-size: 14px;
+        }
+
+        .adder{
+                width: 60rem;
+                display: flex;
+                justify-content: space-between;
         }
 
         @media (max-width: 768px) {
@@ -576,7 +582,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- QUALIFICATIONS SECTION -->
             <div class="form-section">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h3 class="section-title" style="margin: 0;">Qualifications</h3>
+                    <div class="adder ">
+                            <h3 class="section-title" style="margin: 0;">Qualifications</h3>
+                            <button type="button" class="add-btn" onclick="addRow(this)">➕</button>
+                    </div>
+                    
                 </div>
 
                 <div id="qualificationContainer">
@@ -618,7 +628,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     value="<?= htmlspecialchars($q['file_upload_path']) ?>">
 
                                 <div class="q-actions">
-                                    <button type="button" class="add-btn" onclick="addRow()">➕</button>
+                                    
                                     <button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>
                                 </div>
                             </div>
@@ -655,9 +665,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="hidden" name="old_qualification_file[]" value="">
 
                             <div class="form-group">
-                                <label>Actions</label>
                                 <div class="q-actions">
-                                <button type="button" class="add-btn" onclick="addRow()">➕</button>
                                 <button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>
                             </div>
                             </div>
@@ -675,43 +683,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
 let qualificationCount = document.querySelectorAll('.qualification-row').length;
 
-function addRow() {
-    const container = document.getElementById('qualificationContainer');
-    qualificationCount++;
-    const div = document.createElement('div');
-    div.className = 'qualification-row';
+// function addRow(button) {
+//     const container = document.getElementById('qualificationContainer');
+//     qualificationCount++;
+//     const div = document.createElement('div');
+//     div.className = 'qualification-row';
+//     console.log("working")
 
-    div.innerHTML = `
-        <div style="align-self: center; color: #9ca3af; font-weight: 600; font-size: 13px;">${qualificationCount}</div>
-        <div class="form-group">
-            <label>Qualification</label>
-            <input type="text" name="qualification_name[]" placeholder="e.g., B.Tech, MBA">
-        </div>
-        <div class="form-group">
-            <label>Board / University</label>
-            <input type="text" name="board_university[]" placeholder="e.g., IIT Delhi">
-        </div>
-        <div class="form-group">
-            <label>Description</label>
-            <textarea name="description[]" placeholder="Brief description" rows="1"></textarea>
-        </div>
-        <div class="form-group">
-            <label>Year Join</label>
-            <input type="number" name="year_join[]" placeholder="2020">
-        </div>
-        <div class="form-group">
-            <label>Year Finish</label>
-            <input type="number" name="year_finish[]" placeholder="2024">
-        </div>
-        <input type="hidden" name="old_qualification_file[]" value="">
-        <div class="q-actions">
-            <button type="button" class="add-btn" onclick="addRow()">➕</button>
-            <button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>
-        </div>
-    `;
+//     div.innerHTML = `
+//         <div style="align-self: center; color: #9ca3af; font-weight: 600; font-size: 13px;">${qualificationCount}</div>
+//         <div class="form-group">
+//             <label>Qualification</label>
+//             <input type="text" name="qualification_name[]" placeholder="e.g., B.Tech, MBA">
+//         </div>
+//         <div class="form-group">
+//             <label>Board / University</label>
+//             <input type="text" name="board_university[]" placeholder="e.g., IIT Delhi">
+//         </div>
+//         <div class="form-group">
+//             <label>Description</label>
+//             <textarea name="description[]" placeholder="Brief description" rows="1"></textarea>
+//         </div>
+//         <div class="form-group">
+//             <label>Year Join</label>
+//             <input type="number" name="year_join[]" placeholder="2020">
+//         </div>
+//         <div class="form-group">
+//             <label>Year Finish</label>
+//             <input type="number" name="year_finish[]" placeholder="2024">
+//         </div>
+//         <input type="hidden" name="old_qualification_file[]" value="">
 
-    container.appendChild(div);
-}
+//     `;
+
+//     container.appendChild(div);
+// }
 
 function removeRow(button) {
     const container = document.getElementById('qualificationContainer');

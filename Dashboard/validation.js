@@ -118,7 +118,6 @@ function addRow() {
         </div>
         <input type="hidden" name="old_qualification_file[]" value="">
         <div class="q-actions">
-            <button type="button" class="add-btn" onclick="addRow()">➕</button>
             <button type="button" class="remove-btn" onclick="removeRow(this)">✕</button>
         </div>
     `;
