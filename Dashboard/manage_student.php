@@ -46,7 +46,6 @@ $student_count = $result->num_rows;
 
         .navbar {
             display: flex;
-            margin-top: 20px;
             justify-content: space-between;
             align-items: center;
             background: rgba(255, 255, 255, 0.95);
@@ -409,13 +408,13 @@ $student_count = $result->num_rows;
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">👨‍🎓 Student Management</div>
-        <ul class="nav-links">
-            <li><a href="index.php">🏠 Dashboard</a></li>
-            <li><a href="manage_student.php">📋 Manage Students</a></li>
-        </ul>
-    </nav>
+    <header class="navbar">
+            <div class="logo">👨‍🎓 Student Management</div>
+            <ul class="nav-links">
+                <li><a href="index.php">🏠 Dashboard</a></li>
+                <li><a href="manage_student.php">📋 Manage Students</a></li>
+            </ul>    
+    </header>
 
     <div class="container">
         <h1>📚 Manage Students</h1>

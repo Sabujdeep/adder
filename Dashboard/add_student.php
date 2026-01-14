@@ -146,7 +146,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .navbar {
-            margin-top:20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -477,14 +479,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <header>
-        <nav class="navbar">
+    <header class="navbar">
             <div class="logo">👨‍🎓 Student Management</div>
             <ul class="nav-links">
                 <li><a href="index.php">🏠 Dashboard</a></li>
                 <li><a href="manage_student.php">📋 Manage Students</a></li>
-            </ul>
-        </nav>
+            </ul>    
     </header>
 
     <div class="container">
